@@ -1,0 +1,373 @@
+{
+  "info": {
+    "_postman_id": "0d74f7a4-e61a-4fb2-9f57-a88f1c51dbb1",
+    "name": "Go Hello World Service - Full Test Coverage",
+    "description": "All valid, invalid, boundary, edge-case, and HTTP method scenarios.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8889",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ status: \"ok\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Valid Names",
+      "item": [
+        {
+          "name": "Uppercase A boundary - Alice",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Alice"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Alice\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Lowercase a - alice",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=alice"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Alice\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Uppercase M boundary - Mary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Mary"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Mary\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Mixed-case Bob",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Bob"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Bob\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Invalid N-Z Names",
+      "item": [
+        {
+          "name": "Uppercase N boundary - Nancy",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Nancy"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Uppercase Z boundary - Zane",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Zane"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Lowercase z - zoe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=zoe"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Missing and Empty Names",
+      "item": [
+        {
+          "name": "Missing name parameter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Empty name parameter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name="
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Whitespace-only name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=%20%20%20"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Non-Letter Names",
+      "item": [
+        {
+          "name": "Name starting with digit",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=1Alice"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Name starting with symbol",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=%40Alice"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "HTTP Methods",
+      "item": [
+        {
+          "name": "POST is rejected",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Alice"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () { pm.response.to.have.status(405); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Method not allowed\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "PUT is rejected",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": "{{baseUrl}}/hello-world?name=Alice"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 405\", function () { pm.response.to.have.status(405); });",
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Method not allowed\" }); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    }
+  ]
+}
