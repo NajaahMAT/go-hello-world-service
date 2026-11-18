@@ -29,7 +29,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Health status is ok\", function () { pm.expect(pm.response.json().status).to.eql(\"ok\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.response.to.have.header(\"Content-Type\"); pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ status: \"ok\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -55,7 +56,7 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Greeting is correct\", function () { pm.expect(pm.response.json().message).to.eql(\"Hello Alice\"); });"
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Alice\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -76,7 +77,7 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Greeting is capitalized\", function () { pm.expect(pm.response.json().message).to.eql(\"Hello Alice\"); });"
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Alice\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -97,7 +98,7 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Greeting is correct\", function () { pm.expect(pm.response.json().message).to.eql(\"Hello Mary\"); });"
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Mary\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -110,7 +111,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": "{{baseUrl}}/hello-world?name=bob"
+            "url": "{{baseUrl}}/hello-world?name=Bob"
           },
           "event": [
             {
@@ -118,7 +119,7 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });",
-                  "pm.test(\"Greeting is normalized\", function () { pm.expect(pm.response.json().message).to.eql(\"Hello Bob\"); });"
+                  "pm.test(\"Response body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ message: \"Hello Bob\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -144,7 +145,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -165,7 +167,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -186,7 +189,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -212,7 +216,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -233,7 +238,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -254,7 +260,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -280,7 +287,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -301,7 +309,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });",
-                  "pm.test(\"Invalid Input error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Invalid Input\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Invalid Input\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -327,7 +336,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 405\", function () { pm.response.to.have.status(405); });",
-                  "pm.test(\"Method not allowed error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Method not allowed\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Method not allowed\" }); });"
                 ],
                 "type": "text/javascript"
               }
@@ -348,7 +358,8 @@
               "script": {
                 "exec": [
                   "pm.test(\"Status code is 405\", function () { pm.response.to.have.status(405); });",
-                  "pm.test(\"Method not allowed error is returned\", function () { pm.expect(pm.response.json().error).to.eql(\"Method not allowed\"); });"
+                  "pm.test(\"Content-Type is JSON\", function () { pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\"); });",
+                  "pm.test(\"Error body matches API contract\", function () { pm.expect(pm.response.json()).to.eql({ error: \"Method not allowed\" }); });"
                 ],
                 "type": "text/javascript"
               }
